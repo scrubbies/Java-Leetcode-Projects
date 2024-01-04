@@ -1,0 +1,47 @@
+class Solution {
+    public static boolean validPath(int n, int[][] edges, int source, int destination) {
+        ArrayList<Edges>[] graph = new ArrayList[n];
+        for (int i = 0; i < n; i++) 
+        {
+            graph[i] = new ArrayList<>();
+        }
+
+        //edges
+        for (int i = 0; i < edges.length; i++) 
+        {
+            graph[edges[i][0]].add(new Edges(edges[i][0], edges[i][1]));
+            graph[edges[i][1]].add(new Edges(edges[i][1], edges[i][0]));
+        }
+
+        return helper(graph, source, destination, new boolean[n]);
+    }
+
+    public static boolean helper(ArrayList<Edges>[] graph, int source, int destination, boolean[] isVisited) {
+        if (source == destination) 
+        {
+            return true;
+        }
+
+        isVisited[source] = true;
+
+        for (Edges edges : graph[source]) 
+        {
+            if (!isVisited[edges.d] && helper(graph, edges.d, destination, isVisited)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+
+public class Edges {
+    public int s;
+    public int d;
+
+    public Edges(int s, int d) 
+    {
+        this.s = s;
+        this.d = d;
+    }
+}
