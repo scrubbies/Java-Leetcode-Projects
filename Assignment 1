@@ -1,0 +1,27 @@
+class Solution {
+    public int minOperations(int[] nums) {
+        // store ints in hash map
+        Map<Integer, Integer> x = new HashMap<>();
+        
+        // puts nums into map and inc count
+        for (int num : nums)
+        {
+            
+            x.put(num, x.getOrDefault(num, 0) + 1);
+        }
+
+        int ans = 0; // base
+
+        // loop
+        for (int num : x.values()) {
+            if (num == 1)
+            {
+                return -1;
+            }
+
+            ans += (num + 2) / 3;
+        }
+
+        return ans;
+    }
+}
